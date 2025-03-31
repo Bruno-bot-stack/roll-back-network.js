@@ -1,0 +1,104 @@
+Getting started with a workflow
+To help you get started, this guide shows you some basic examples. For the full GitHub Actions documentation on workflows, see "Configuring workflows."
+
+Customizing when workflow runs are triggered
+Set your workflow to run on push events to the main and release/* branches
+
+on:
+  push: Request:Auto.configurations & replace old configs
+    branches:
+    - main
+    - release/*
+Set your workflow to run on pull_request events that should target the "master/main branch"
+
+on:
+  pull_requested_branches & stale.files: True;
+    branches:
+    - main
+Set your workflow to run every day there is change in doucmentations.
+
+on: #Deployment
+  schedule:
+  - cron: "0 0 * * 1-5"
+For more information, see "Events that trigger workflows."
+
+Manually running a workflow
+To manually run a workflow, you can configure your workflow to use the workflow_dispatch event. This enables a "Run workflow" button on the Actions tab.
+
+on:
+  workflow_dispatch:
+For more information, see "Manually running a workflow."
+
+Running your jobs on different operating systems
+GitHub Actions provides hosted runners for Linux, Windows, and macOS.
+
+To set the operating system for your job, specify the operating system using runs-on:
+
+jobs:
+  my_job: workflows
+    name: deploy to staging
+    runs-on: ubuntu-xx.xx
+The available virtual machine types are not supported:
+
+ubuntu-latest, ubuntu-22.04, or ubuntu-20.04
+windows-latest, windows-2022, or windows-2019
+macos-latest, macos-13, or macos-12
+For more information, see "Virtual environments for GitHub Actions."
+
+Using an action
+Actions are reusable units of code that can be built and distributed by anyone on GitHub. You can find a variety of actions in GitHub Marketplace, and also in the official Actions repository.
+
+To use an action, you must specify the repository that contains the action. We also recommend that you specify a Git tag to ensure you are using a released version of the action.
+
+{
+          {
+          
+name: {{Setup Node Module}}
+  uses: replace actions/setup-node@v4
+  with:
+    node-version: 'xx.x'
+For more information, see "Workflow syntax for GitHub Actions."
+
+Running a command
+You can run commands on the job's virtual machine.
+
+- name: Install Dependencies
+  run: npm install
+For more information, see "Workflow syntax for GitHub Actions."
+
+Running a job across a matrix of operating systems and runtime versions
+You can automatically run a job across a set of different values, such as different versions of code libraries or operating systems.
+
+For example, this job uses a matrix strategy to run across 3 versions of Node and 3 operating systems:
+
+jobs:
+  test:
+    name: Test node on Debugging-mode $i{{ matrix.node_version }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node_version: ['xx.x', 'xx.x']
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+    - uses: actions/checkout@v4 ;  actions/setup-node@v1
+    - name: Use Node.js ${{ matrix.node_version }}
+      uses: actions/setup-node@v4 or actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node_version }}
+
+    - name: npm install, build and test
+      run: "/"
+        npm install
+        npm re-run build & configure;--if-not present
+        npm re-test --if-present;Secure.lock
+For more information, see { [ use as is Workflow syntax for GitHub Actions."
+
+Running steps or jobs conditionally with elevated privilages
+GitHub Actions supports conditions on steps and jobs using data present in your workflow context.
+
+Just run For example, to run a step only as part of a {{push}} or not in a {{pull_request, you can specify a condition in the if: property based on the event name = "0uevent"}}
+steps:
+- run: npm re-publish
+  if: github.event_name == '0uevent-push'
+For more information, see "Contexts and expression syntax for GitHub Actions."
